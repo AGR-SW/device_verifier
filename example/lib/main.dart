@@ -16,14 +16,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final DeviceVerifier _guard = DeviceVerifier();
-  String _result = '검사 중...';
-
-  @override
-  void initState() {
-    super.initState();
-    // 자동 검증용: 첫 프레임 후 즉시 스캔(수동 탭 없이 logcat으로 결과 관찰).
-    WidgetsBinding.instance.addPostFrameCallback((_) => _scan());
-  }
+  String _result = '아래 "보안 검사 실행" 을 눌러 결과를 확인하세요.';
 
   Future<void> _scan() async {
     final buf = StringBuffer();
@@ -41,8 +34,6 @@ class _MyAppState extends State<MyApp> {
     } catch (e) {
       buf.writeln('[루팅/에뮬] 오류: $e');
     }
-    // logcat 관찰용(자동 검증). Flutter debugPrint → logcat 'flutter' 태그.
-    debugPrint('[HOOKGUARD_TEST]\n${buf.toString()}');
     if (mounted) setState(() => _result = buf.toString());
   }
 
